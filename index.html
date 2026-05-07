@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SWS — Document Management</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Livvic:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+
+<!-- ═══════════════════ SIDEBAR ═══════════════════ -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-mark">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+        <rect width="28" height="28" rx="8" fill="var(--accent)"/>
+        <path d="M7 8h14M7 14h9M7 20h12" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <span class="logo-text">DocVikk</span>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a href="#" class="nav-item active" data-section="dashboard">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+        <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
+      </svg>
+      Dashboard
+    </a>
+    <a href="#" class="nav-item" data-section="documents">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+        <polyline points="14,2 14,8 20,8"/>
+      </svg>
+      Documents
+    </a>
+    <a href="#" class="nav-item" data-section="upload">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="16,16 12,12 8,16"/>
+        <line x1="12" y1="12" x2="12" y2="21"/>
+        <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/>
+      </svg>
+      Upload
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="user-chip">
+      <div class="user-avatar">A</div>
+      <div class="user-info">
+        <span class="user-name">Admin</span>
+        <span class="user-role">Document Manager</span>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<!-- ═══════════════════ MAIN ═══════════════════ -->
+<main class="main">
+
+  <!-- Top bar -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+      <h1 class="page-title" id="pageTitle">Dashboard</h1>
+    </div>
+    <div class="topbar-right">
+      <button class="notif-btn" id="notifBtn" aria-label="Notifications">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+          <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+        </svg>
+        <span class="notif-badge" id="notifBadge" style="display:none">0</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Upload-in-progress banner -->
+  <div class="upload-banner" id="uploadBanner" style="display:none">
+    <div class="banner-pulse"></div>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="16,16 12,12 8,16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>
+    <span>Bulk upload in progress — processing your files…</span>
+  </div>
+
+  <!-- ─── DASHBOARD SECTION ─── -->
+  <section class="section" id="section-dashboard">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon blue"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg></div>
+        <div class="stat-info">
+          <span class="stat-value" id="statTotal">0</span>
+          <span class="stat-label">Total Documents</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon teal"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20,6 9,17 4,12"/></svg></div>
+        <div class="stat-info">
+          <span class="stat-value" id="statComplete">0</span>
+          <span class="stat-label">Completed</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon amber"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg></div>
+        <div class="stat-info">
+          <span class="stat-value" id="statToday">0</span>
+          <span class="stat-label">Uploaded Today</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon rose"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19,12 12,19 5,12"/></svg></div>
+        <div class="stat-info">
+          <span class="stat-value" id="statSize">0 KB</span>
+          <span class="stat-label">Total Storage</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="recent-section">
+      <div class="section-header">
+        <h2>Recent Documents</h2>
+        <a href="#" class="view-all" data-target="documents">View all →</a>
+      </div>
+      <div class="doc-table-wrap">
+        <table class="doc-table" id="recentTable">
+          <thead>
+            <tr>
+              <th>File</th><th>Size</th><th>Uploaded</th><th>Status</th><th></th>
+            </tr>
+          </thead>
+          <tbody id="recentTableBody">
+            <tr class="empty-row"><td colspan="5"><span>No documents yet</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── DOCUMENTS SECTION ─── -->
+  <section class="section hidden" id="section-documents">
+    <div class="section-header">
+      <h2>All Documents</h2>
+      <span class="doc-count" id="docCount">0 files</span>
+    </div>
+    <div class="doc-table-wrap">
+      <table class="doc-table" id="allDocsTable">
+        <thead>
+          <tr>
+            <th>File</th><th>Size</th><th>Uploaded</th><th>Status</th><th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="allDocsTableBody">
+          <tr class="empty-row"><td colspan="5"><span>No documents yet</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ─── UPLOAD SECTION ─── -->
+  <section class="section hidden" id="section-upload">
+    <div class="upload-area" id="dropZone">
+      <div class="drop-icon">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="16,16 12,12 8,16"/>
+          <line x1="12" y1="12" x2="12" y2="21"/>
+          <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/>
+        </svg>
+      </div>
+      <p class="drop-title">Drag & drop PDF files here</p>
+      <p class="drop-sub">or click to browse your files</p>
+      <input type="file" id="fileInput" accept=".pdf" multiple hidden />
+      <button class="btn-primary" onclick="document.getElementById('fileInput').click()">
+        Choose Files
+      </button>
+      <p class="drop-hint">Supported format: PDF &nbsp;·&nbsp; Max 50 MB per file</p>
+    </div>
+
+    <!-- Queue -->
+    <div class="queue-section" id="queueSection" style="display:none">
+      <div class="section-header">
+        <h2>Upload Queue</h2>
+        <button class="btn-primary" id="startUploadBtn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="16,16 12,12 8,16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>
+          Upload All
+        </button>
+      </div>
+      <div id="queueList"></div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ═══════════════════ NOTIFICATION PANEL ═══════════════════ -->
+<div class="notif-overlay" id="notifOverlay"></div>
+<aside class="notif-panel" id="notifPanel">
+  <div class="notif-panel-header">
+    <h3>Notifications</h3>
+    <div class="notif-actions">
+      <button class="btn-ghost" id="markAllReadBtn">Mark all read</button>
+      <button class="btn-icon" id="closeNotifBtn" aria-label="Close">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="notif-list" id="notifList">
+    <p class="notif-empty">No notifications yet</p>
+  </div>
+</aside>
+
+<!-- Toast -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.min.js"></script>
+<script src="/static/script.js"></script>
+</body>
+</html>
